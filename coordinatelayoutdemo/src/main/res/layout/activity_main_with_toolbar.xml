@@ -18,9 +18,14 @@
             android:background="@color/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
             app:titleTextColor="@android:color/white"
-            app:title="@string/app_name">
+            android:gravity="center_vertical"
+            >
 
-
+            <TextView
+                android:text="自定义的标题TextView"
+                android:layout_width="wrap_content"
+                android:textColor="#fff"
+                android:layout_height="wrap_content" />
         </android.support.v7.widget.Toolbar>
 
 

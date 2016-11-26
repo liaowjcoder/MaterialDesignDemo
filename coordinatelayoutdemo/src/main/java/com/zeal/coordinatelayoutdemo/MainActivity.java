@@ -3,6 +3,8 @@ package com.zeal.coordinatelayoutdemo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Toast;
 
 /**
  * activity_main:实现了只有手指往下滑动，标题栏就可以见
@@ -37,6 +39,27 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        //显示一个返回键操作按钮
+        //ActionBar ab = getSupportActionBar();
+        //ab.setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationIcon(R.drawable.a1);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "NavigationOnClickListenern", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //设置内容在Navigation展示时的距离，包括它的宽度计算在内
+        //toolbar.setContentInsetStartWithNavigation(220);
+
+        //toolbar.setTitle(null);//这种方式是不能讲title隐藏掉的
+        getSupportActionBar().setTitle(null);//这种方式可以实现
+        //toolbar.setLogo(R.mipmap.ic_launcher);
+        //toolbar.setSubtitle("副标题");
+        //toolbar.setSubtitleTextColor(Color.parseColor("#ffffff"));
 
     }
 }
