@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zeal.coordinatelayoutdemo.MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:id="@+id/toolbar"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:titleTextColor="@android:color/white"
+            app:title="@string/app_name">
+
+
+        </android.support.v7.widget.Toolbar>
+
+
+    </android.support.design.widget.AppBarLayout>
+    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    这个属性可以让NestedScrollView显示在AppBarLayout的下面
+    -->
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#FFDDFF99"
+                android:gravity="center"
+                android:text="内容1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#FFDDFF55"
+                android:gravity="center"
+                android:text="内容2" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#EEDDFF"
+                android:gravity="center"
+                android:text="内容3" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#AADDFF"
+                android:gravity="center"
+                android:text="内容4" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#55AADDFF"
+                android:gravity="center"
+                android:text="内容4" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#CCDDFF"
+                android:gravity="center"
+                android:text="内容5" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#88CCDDFF"
+                android:gravity="center"
+                android:text="内容6" />
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>
