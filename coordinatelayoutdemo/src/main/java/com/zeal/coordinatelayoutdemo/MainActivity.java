@@ -1,12 +1,15 @@
 package com.zeal.coordinatelayoutdemo;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 /**
@@ -38,6 +41,15 @@ public class MainActivity extends AppCompatActivity {
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_with_colleaselayout);
+
+        //当系统版本大于等于4.4时，将状态栏设置为透明状态
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = getWindow();
+            // Translucent status bar
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -71,5 +83,7 @@ public class MainActivity extends AppCompatActivity {
         collapsingToolbarLayout.setCollapsedTitleGravity(Gravity.CENTER);
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.parseColor("#ffffff"));
         collapsingToolbarLayout.setExpandedTitleColor(Color.parseColor("#ffffff"));
+        //设置折叠后状态栏的颜色为透明
+        collapsingToolbarLayout.setStatusBarScrimColor(Color.TRANSPARENT);
     }
 }
