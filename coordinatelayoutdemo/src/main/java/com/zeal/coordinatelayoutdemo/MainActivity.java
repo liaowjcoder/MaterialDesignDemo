@@ -22,6 +22,9 @@ import android.support.v7.widget.Toolbar;
  * 这个属性可以让NestedScrollView显示在AppBarLayout的下面
  *
  * toolbar的使用：
+ * Theme.AppCompat.Light.NoActionBar
+ * Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+ * setSupportActionBar(toolbar);
  *
  */
 public class MainActivity extends AppCompatActivity {
