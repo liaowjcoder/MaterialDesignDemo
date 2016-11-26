@@ -3,14 +3,14 @@ package com.zeal.coordinatelayoutdemo;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 /**
  * activity_main:实现了只有手指往下滑动，标题栏就可以见
@@ -36,6 +36,8 @@ import android.widget.Toast;
  */
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "zeal";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -46,26 +48,28 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();
             // Translucent status bar
-            window.setFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //透明导航栏
+            //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
+        //1.Toolbar
         //显示一个返回键操作按钮
         //ActionBar ab = getSupportActionBar();
         //ab.setDisplayHomeAsUpEnabled(true);
 
-        toolbar.setNavigationIcon(R.drawable.a1);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "NavigationOnClickListenern", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        toolbar.setNavigationIcon(R.drawable.a1);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(MainActivity.this, "NavigationOnClickListenern", Toast.LENGTH_SHORT).show();
+//            }
+//        });
         //getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -79,11 +83,32 @@ public class MainActivity extends AppCompatActivity {
         //toolbar.setSubtitleTextColor(Color.parseColor("#ffffff"));
 
 
+        //2.CollapsingToolbarLayout
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingtoolbarlayout);
         collapsingToolbarLayout.setCollapsedTitleGravity(Gravity.CENTER);
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.parseColor("#ffffff"));
         collapsingToolbarLayout.setExpandedTitleColor(Color.parseColor("#ffffff"));
         //设置折叠后状态栏的颜色为透明
         collapsingToolbarLayout.setStatusBarScrimColor(Color.TRANSPARENT);
+
+        //3.AppbarBarLayout
+        AppBarLayout app = (AppBarLayout) findViewById(R.id.appbarlayout);
+        app.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                //滑动隐藏时verticalOffset越来越小，小于0
+                //滑动显示时verticalOffset越来越大趋近于0
+                //verticalOffset==0时，说明是展开的；
+                //verticalOffset<0，开始收缩了；
+                Log.e(TAG, "onOffsetChanged: verticalOffset:"+verticalOffset +"=="+toolbar.getHeight());
+                //结论：若是CollapsingToolbarLayout设置为app:layout_scrollFlags="scroll"类型的话，那么
+                //当CollapsingToolbarLayout滑出屏幕时和设置为app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                //相差的大小就是Toolbar的大小
+                //-172==64  scroll|exitUntilCollapsed
+                //-236==64  scroll
+            }
+        });
+
     }
 }
+
