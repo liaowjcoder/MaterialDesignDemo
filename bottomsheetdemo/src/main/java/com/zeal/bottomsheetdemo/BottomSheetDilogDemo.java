@@ -74,7 +74,9 @@ public class BottomSheetDilogDemo extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         recyclerView.setAdapter(new MyAdapter());
         recyclerView.addItemDecoration(new DividerGridItemDecoration(this));
-        dialog.setContentView(view);
+        ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        lp.bottomMargin = 200;
+        dialog.setContentView(view,lp);
         dialog.show();
 
 
