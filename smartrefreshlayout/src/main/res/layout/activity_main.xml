@@ -7,24 +7,38 @@
     android:orientation="vertical">
 
     <storage.zeal.com.smartrefreshlayout.view.SmartFreshLayout
+        android:id="@+id/smart_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <!-- <TextView
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:textColor="#fff"
+             android:background="@color/colorPrimary"
+             android:gravity="bottom|center_horizontal"
+             android:id="@+id/headerview"
+             android:text="我是头头" />-->
+        <!--      <storage.zeal.com.smartrefreshlayout.MyHeaderView
+                  android:id="@+id/headerview"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@color/colorPrimary"
+                  android:gravity="bottom|center_horizontal"
+                  android:text="我是头头"
+                  android:textColor="#fff" />-->
+        <storage.zeal.com.smartrefreshlayout.RefreshLayoutWithArrow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="#fff"
-            android:background="@color/colorPrimary"
-            android:gravity="bottom|center_horizontal"
-            android:id="@+id/headerview"
-            android:text="我是头头" />
+            android:layout_height="match_parent" />
 
         <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
             android:id="@+id/rv"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
-
-        </android.support.v7.widget.RecyclerView>
+        <storage.zeal.com.smartrefreshlayout.MyFooterView
+            android:layout_width="match_parent"
+            android:background="#fff"
+            android:layout_height="match_parent" />
     </storage.zeal.com.smartrefreshlayout.view.SmartFreshLayout>
 </LinearLayout>
