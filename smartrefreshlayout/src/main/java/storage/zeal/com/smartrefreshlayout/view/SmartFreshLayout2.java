@@ -7,10 +7,10 @@ import android.support.v4.view.NestedScrollingParentHelper;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Scroller;
+import android.widget.Toast;
 
 import storage.zeal.com.smartrefreshlayout.Footer;
 import storage.zeal.com.smartrefreshlayout.Header;
@@ -219,8 +219,8 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
             return;
         }
 
-        if (getScrollY() == 0 && dyUnconsumed != 0) {//还没滑动过，要在这里开始首次的滑动
-            Log.e("zeal", "onNestedScroll dyUnconsumed:" + dyUnconsumed);
+
+        if (dyUnconsumed != 0) {//还没滑动过，要在这里开始首次的滑动
             if (dyUnconsumed < 0) {//手指向下滑动
 
                 scroll(dyUnconsumed);
@@ -243,8 +243,8 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
         }
 
 
-        if (getScrollY() == 0 && mCurrentState != REFRESHING && mCurrentState != LOADING) {//表示当前初次滑动， smrl 就不响应这个事件，在 onNestedScroll 中去处理 smrl 的首次滑动。
-            Log.e("zeal", "还不可以滑动...");
+        if (getScrollY() == 0) {//表示当前初次滑动， smrl 就不响应这个事件，在 onNestedScroll 中去处理 smrl 的首次滑动。
+            //Log.e("zeal", "还不可以滑动...");
             return;
         }
 
@@ -285,6 +285,11 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
             }
             return;
         } else if (mCurrentState == LOADING) {
+
+            if (getScrollY() == 0) {
+                Toast.makeText(getContext(), "LOADING", Toast.LENGTH_SHORT).show();
+            }
+
             if (dy > 0) {//手指向上海东
                 if (!canScrollUpVertically) {
                     consumed[1] = dy;
@@ -321,7 +326,7 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
 
                 consumed[1] = dy;
 
-                Log.e("zeal", "getScrollY = " + getScrollY() + "---dy:" + dy);
+                //Log.e("zeal", "getScrollY = " + getScrollY() + "---dy:" + dy);
                 scroll(dy, true);
 
             } else if (dy > 0) {//手指向上滑动
@@ -335,18 +340,18 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
                         consumed[1] = -getScrollY();
                         scroll(-getScrollY());
 
-                        Log.e("zeal", "dy:" + (-getScrollY()));
+                        //Log.e("zeal", "dy:" + (-getScrollY()));
                     } else {//事件交给 smrl 处理，显示底部
 
                         consumed[1] = dy;
                         scroll(dy);
-                        Log.e("zeal", "dy:" + dy);
+                        //Log.e("zeal", "dy:" + dy);
                     }
 
                 } else {//当前需要滑动的事件*阻尼因子之后比当前刷新头部可见部分还要小
                     consumed[1] = dy;
                     scroll(dy);
-                    Log.e("zeal", "dy:" + dy);
+                    //Log.e("zeal", "dy:" + dy);
                 }
 
 
