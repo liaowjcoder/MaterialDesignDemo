@@ -7,6 +7,7 @@ import android.support.v4.view.NestedScrollingParentHelper;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Scroller;
@@ -43,8 +44,8 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
 
     private int mCurrentState = NONE;
 
-    private static final float DUMP = 0.5f;
-    private static final float DUMP2 = 0.4f;
+    private static final float DUMP = 0.25f;
+    private static final float DUMP2 = 0.05f;
 
     private boolean mIsSupportRefresh;
     private boolean mIsSupportLoadMore;
@@ -197,6 +198,8 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
                 //继续回到加载的位置
                 startScroll(0, -getScrollY() + mLoadMoreHeight);
             }
+        } else {
+            reset();
         }
     }
 
@@ -242,6 +245,8 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
             return;
         }
 
+        Log.e("aa","dy:"+dy);
+        Log.e("aa","getScrollY:"+getScrollY());
 
         if (getScrollY() == 0) {//表示当前初次滑动， smrl 就不响应这个事件，在 onNestedScroll 中去处理 smrl 的首次滑动。
             //Log.e("zeal", "还不可以滑动...");
@@ -260,7 +265,7 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
 
                 if (!canScrollDownVertically) {
                     consumed[1] = dy;
-
+                    Log.e("zeal", "手指向下滑动:" + dy);
                     scroll(dy, true);
                 }
 
@@ -303,6 +308,7 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
                     if (canScrollDownVertically) {//rv是否能向下滑动
                         //将剩余事件交给 rv 去处理
                         consumed[1] = -getScrollY();
+
                         scroll(-getScrollY());
                     }/** else {//事件交给 smrl 处理，显示底部
 
@@ -483,7 +489,8 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
      * @param isDump 是否需要阻尼效果
      */
     private void scroll(int y, boolean isDump) {
-
+        Log.e("zeal", "state:" + mCurrentState);
+        Log.e("zeal", "scrollY:" + getScrollY());
         if (getScrollY() == 0 && mCurrentState != REFRESHING && mCurrentState != LOADING) {
             notifyStateChange(DRAG_DOWN);
         } else if (getScrollY() < 0 && mCurrentState != REFRESHING) {
@@ -500,8 +507,13 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
             }
         }
         if (isDump) {
-            y *= DUMP;
+            if (mCurrentState == REFRESHING || mCurrentState == LOADING) {
+                y *= DUMP2;
+            } else {
+                y *= DUMP;
+            }
         }
+        Log.e("zeal", "转换后的值：" + y);
         scrollTo(0, getScrollY() + y);
 
     }

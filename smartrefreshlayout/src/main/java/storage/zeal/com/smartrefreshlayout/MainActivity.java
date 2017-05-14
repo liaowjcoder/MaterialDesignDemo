@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements  SmartFreshLayout
 
     private void addData() {
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 25; i++) {
             datas.add("hello world " + i);
         }
     }
