@@ -3,7 +3,7 @@
     <!--19后的版本都使用这个style文件-->
     <style name="AppTheme" parent="@style/BaseAppTheme">
         <!--Android:windowTranslucentStatus这个属性是v19开始引入的-->
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
     </style>
 
 

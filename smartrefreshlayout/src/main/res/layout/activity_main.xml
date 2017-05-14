@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <storage.zeal.com.smartrefreshlayout.view.SmartFreshLayout
+    <storage.zeal.com.smartrefreshlayout.view.SmartFreshLayout2
         android:id="@+id/smart_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,17 +19,17 @@
              android:gravity="bottom|center_horizontal"
              android:id="@+id/headerview"
              android:text="我是头头" />-->
-        <!--      <storage.zeal.com.smartrefreshlayout.MyHeaderView
+        <storage.zeal.com.smartrefreshlayout.MyHeaderView
                   android:id="@+id/headerview"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:background="@color/colorPrimary"
                   android:gravity="bottom|center_horizontal"
                   android:text="我是头头"
-                  android:textColor="#fff" />-->
-        <storage.zeal.com.smartrefreshlayout.RefreshLayoutWithArrow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+                  android:textColor="#fff" />-
+        <!--<storage.zeal.com.smartrefreshlayout.RefreshLayoutWithArrow-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv"
@@ -40,5 +40,5 @@
             android:layout_width="match_parent"
             android:background="#fff"
             android:layout_height="match_parent" />
-    </storage.zeal.com.smartrefreshlayout.view.SmartFreshLayout>
+    </storage.zeal.com.smartrefreshlayout.view.SmartFreshLayout2>
 </LinearLayout>

@@ -76,6 +76,7 @@
     这个属性可以让NestedScrollView显示在AppBarLayout的下面
     -->
     <android.support.v4.widget.NestedScrollView
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">

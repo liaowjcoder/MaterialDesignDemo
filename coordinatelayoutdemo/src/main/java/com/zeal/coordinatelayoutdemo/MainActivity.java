@@ -1,14 +1,9 @@
 package com.zeal.coordinatelayoutdemo;
 
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -42,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_with_colleaselayout);
+        setContentView(R.layout.activity_main_with_toolbar);
 
         //当系统版本大于等于4.4时，将状态栏设置为透明状态
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -84,30 +79,30 @@ public class MainActivity extends AppCompatActivity {
 
 
         //2.CollapsingToolbarLayout
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingtoolbarlayout);
-        collapsingToolbarLayout.setCollapsedTitleGravity(Gravity.CENTER);
-        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.parseColor("#ffffff"));
-        collapsingToolbarLayout.setExpandedTitleColor(Color.parseColor("#ffffff"));
-        //设置折叠后状态栏的颜色为透明
-        collapsingToolbarLayout.setStatusBarScrimColor(Color.TRANSPARENT);
-
-        //3.AppbarBarLayout
-        AppBarLayout app = (AppBarLayout) findViewById(R.id.appbarlayout);
-        app.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                //滑动隐藏时verticalOffset越来越小，小于0
-                //滑动显示时verticalOffset越来越大趋近于0
-                //verticalOffset==0时，说明是展开的；
-                //verticalOffset<0，开始收缩了；
-                Log.e(TAG, "onOffsetChanged: verticalOffset:"+verticalOffset +"=="+toolbar.getHeight());
-                //结论：若是CollapsingToolbarLayout设置为app:layout_scrollFlags="scroll"类型的话，那么
-                //当CollapsingToolbarLayout滑出屏幕时和设置为app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                //相差的大小就是Toolbar的大小
-                //-172==64  scroll|exitUntilCollapsed
-                //-236==64  scroll
-            }
-        });
+//        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingtoolbarlayout);
+//        collapsingToolbarLayout.setCollapsedTitleGravity(Gravity.CENTER);
+//        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.parseColor("#ffffff"));
+//        collapsingToolbarLayout.setExpandedTitleColor(Color.parseColor("#ffffff"));
+//        //设置折叠后状态栏的颜色为透明
+//        collapsingToolbarLayout.setStatusBarScrimColor(Color.TRANSPARENT);
+//
+//        //3.AppbarBarLayout
+//        AppBarLayout app = (AppBarLayout) findViewById(R.id.appbarlayout);
+//        app.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+//            @Override
+//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+//                //滑动隐藏时verticalOffset越来越小，小于0
+//                //滑动显示时verticalOffset越来越大趋近于0
+//                //verticalOffset==0时，说明是展开的；
+//                //verticalOffset<0，开始收缩了；
+//                Log.e(TAG, "onOffsetChanged: verticalOffset:"+verticalOffset +"=="+toolbar.getHeight());
+//                //结论：若是CollapsingToolbarLayout设置为app:layout_scrollFlags="scroll"类型的话，那么
+//                //当CollapsingToolbarLayout滑出屏幕时和设置为app:layout_scrollFlags="scroll|exitUntilCollapsed"
+//                //相差的大小就是Toolbar的大小
+//                //-172==64  scroll|exitUntilCollapsed
+//                //-236==64  scroll
+//            }
+//        });
 
     }
 }
