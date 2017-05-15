@@ -26,7 +26,7 @@
                   android:background="@color/colorPrimary"
                   android:gravity="bottom|center_horizontal"
                   android:text="我是头头"
-                  android:textColor="#fff" />-
+                  android:textColor="#fff" />
         <!--<storage.zeal.com.smartrefreshlayout.RefreshLayoutWithArrow-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent" />-->
@@ -34,7 +34,110 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="hello world"
+                    />
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
         <storage.zeal.com.smartrefreshlayout.MyFooterView
             android:layout_width="match_parent"

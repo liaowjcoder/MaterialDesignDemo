@@ -48,7 +48,7 @@ public class MyFooterView extends android.support.v7.widget.AppCompatTextView im
 
 
     public int getLoadHeight() {
-        return dip2Px(50);
+        return dip2Px(100);
     }
 
     public int dip2Px(int dip) {

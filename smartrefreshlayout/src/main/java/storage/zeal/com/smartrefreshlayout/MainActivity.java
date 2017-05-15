@@ -1,6 +1,7 @@
 package storage.zeal.com.smartrefreshlayout;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements  SmartFreshLayout
 
     private void addData() {
 
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 100; i++) {
             datas.add("hello world " + i);
         }
     }
@@ -50,12 +51,12 @@ public class MainActivity extends AppCompatActivity implements  SmartFreshLayout
 
     @Override
     public void onRefresh() {
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mSmartLayout.setRefresh(false);
-//            }
-//        }, 3000);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSmartLayout.setRefresh(false);
+            }
+        }, 3000);
         Toast.makeText(this, "开始刷新", Toast.LENGTH_SHORT).show();
     }
 }
