@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -25,6 +26,10 @@ public class MainActivity extends AppCompatActivity implements SmartFreshLayout2
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         addData();
         rv = (RecyclerView) findViewById(R.id.rv);
         mSmartLayout = (SmartFreshLayout2) findViewById(R.id.smart_refresh_layout);
@@ -53,12 +58,12 @@ public class MainActivity extends AppCompatActivity implements SmartFreshLayout2
 
     @Override
     public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mSmartLayout.setRefresh(false);
-            }
-        }, 3000);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mSmartLayout.setRefresh(false);
+//            }
+//        }, 2000);
         Toast.makeText(this, "开始刷新", Toast.LENGTH_SHORT).show();
     }
 

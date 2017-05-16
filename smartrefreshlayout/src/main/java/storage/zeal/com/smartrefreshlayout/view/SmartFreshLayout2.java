@@ -3,6 +3,8 @@ package storage.zeal.com.smartrefreshlayout.view;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.NestedScrollingChild;
+import android.support.v4.view.NestedScrollingChildHelper;
 import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.NestedScrollingParentHelper;
 import android.support.v4.view.ViewCompat;
@@ -23,9 +25,11 @@ import storage.zeal.com.smartrefreshlayout.Header;
  * Created by liaowj on 2017/5/11.
  */
 
-public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParent {
+public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParent, NestedScrollingChild {
 
     private final NestedScrollingParentHelper parentHelper;
+
+    private final NestedScrollingChildHelper childHelper;
 
     private ViewGroup mScrollView;
 
@@ -67,10 +71,14 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
         super(context, attrs);
         setBackgroundColor(Color.CYAN);
         parentHelper = new NestedScrollingParentHelper(this);
+
+        childHelper = new NestedScrollingChildHelper(this);
+
         init();
     }
 
     private void init() {
+        setNestedScrollingEnabled(true);
         mScroller = new Scroller(this.getContext());
     }
 
@@ -171,10 +179,13 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
 
     @Override
     public void onNestedScrollAccepted(View child, View target, int axes) {
+        parentHelper.onNestedScrollAccepted(child, target, axes);
+        startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL);
     }
 
     @Override
     public void onStopNestedScroll(View child) {
+        parentHelper.onStopNestedScroll(child);
         //头部可见
         if (getScrollY() < 0) {
             if (mCurrentState == DRAG_DOWN) {
@@ -256,8 +267,8 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
                 scroll(dyUnconsumed);
 
             }
-
         }
+
 
     }
 
@@ -265,23 +276,32 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
 
 
-//        float x = ViewCompat.getX(target);
-//        Log.e("zeal","x:"+x);
-
-
-        //Log.e("zeal", "target:" + target + "\n====dy:" + dy);
-
-//        if (Math.abs(dx) > Math.abs(dy)) {
-//            consumed[1] = dy;
-//            return;
-//        }
-
         if (!mIsSupportRefresh || !mIsSupportLoadMore) {
             return;
         }
 
         if (getScrollY() == 0) {//表示当前初次滑动， smrl 就不响应这个事件，在 onNestedScroll 中去处理 smrl 的首次滑动。
-            //Log.e("zeal", "还不可以滑动...");
+            //询问父亲是否要响应这个事件
+            int[] preConsume = new int[2];
+
+            dispatchNestedPreScroll(dx, dy, preConsume, null);
+
+            consumed[1] = preConsume[1];
+
+            return;
+        }
+
+
+        //当前是头部或者底部可见时，先询问父控件是否要滑动；
+        int[] preConsume = new int[2];
+        dispatchNestedPreScroll(dx, dy, preConsume, null);
+
+        int preConsumeY = preConsume[1];
+        dy = dy - preConsumeY;
+
+        if (dy == 0) {
+            //事件全部被父亲都消费了
+            consumed[1] = preConsumeY;
             return;
         }
 
@@ -289,6 +309,7 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
         boolean canScrollUpVertically = ViewCompat.canScrollVertically(mScrollView, 1);
         //判断rv是否能往下滑动
         boolean canScrollDownVertically = ViewCompat.canScrollVertically(mScrollView, -1);
+
 
         //正在刷新和正在加载的过程处理
         if (mCurrentState == REFRESHING) {
@@ -432,7 +453,7 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
 
     @Override
     public int getNestedScrollAxes() {
-        return ViewCompat.SCROLL_AXIS_VERTICAL;
+        return parentHelper.getNestedScrollAxes();
     }
 
     @Override
@@ -634,5 +655,56 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
         //滑动结束后，只有在恢复到原始状态才能去发起第二次滑动
         //
         return super.dispatchTouchEvent(ev);
+    }
+
+
+    // NestedScrollingChild
+
+    @Override
+    public void setNestedScrollingEnabled(boolean enabled) {
+        childHelper.setNestedScrollingEnabled(enabled);
+    }
+
+
+    @Override
+    public boolean isNestedScrollingEnabled() {
+        return childHelper.isNestedScrollingEnabled();
+    }
+
+    @Override
+    public boolean hasNestedScrollingParent() {
+        return childHelper.hasNestedScrollingParent();
+    }
+
+    @Override
+    public boolean startNestedScroll(int axes) {
+        return childHelper.startNestedScroll(axes);
+    }
+
+    @Override
+    public void stopNestedScroll() {
+        childHelper.stopNestedScroll();
+    }
+
+    @Override
+    public boolean dispatchNestedScroll(int dxConsumed, int dyConsumed, int dxUnconsumed,
+                                        int dyUnconsumed, int[] offsetInWindow) {
+        return childHelper.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed,
+                offsetInWindow);
+    }
+
+    @Override
+    public boolean dispatchNestedPreScroll(int dx, int dy, int[] consumed, int[] offsetInWindow) {
+        return childHelper.dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow);
+    }
+
+    @Override
+    public boolean dispatchNestedFling(float velocityX, float velocityY, boolean consumed) {
+        return childHelper.dispatchNestedFling(velocityX, velocityY, consumed);
+    }
+
+    @Override
+    public boolean dispatchNestedPreFling(float velocityX, float velocityY) {
+        return childHelper.dispatchNestedPreFling(velocityX, velocityY);
     }
 }
