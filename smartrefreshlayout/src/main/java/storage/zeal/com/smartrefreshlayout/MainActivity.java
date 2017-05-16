@@ -12,7 +12,7 @@ import java.util.List;
 
 import storage.zeal.com.smartrefreshlayout.view.SmartFreshLayout2;
 
-public class MainActivity extends AppCompatActivity implements  SmartFreshLayout2.RefreshListener {
+public class MainActivity extends AppCompatActivity implements SmartFreshLayout2.RefreshListener, SmartFreshLayout2.LoadMoreListener {
     private List<String> datas = new ArrayList<>();
 
     private RecyclerView rv;
@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements  SmartFreshLayout
     private MyAdapter myAdapter;
 
     private SmartFreshLayout2 mSmartLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements  SmartFreshLayout
         rv.setAdapter(myAdapter);
 
         mSmartLayout.setmOnRefreshListener(this);
+        mSmartLayout.setLoadMoreListener(this);
 //        mSmartLayout.post(new Runnable() {
 //            @Override
 //            public void run() {
@@ -58,5 +60,16 @@ public class MainActivity extends AppCompatActivity implements  SmartFreshLayout
             }
         }, 3000);
         Toast.makeText(this, "开始刷新", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLoadMore() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSmartLayout.setLoadMoreEnd();
+            }
+        }, 3000);
+        Toast.makeText(this, "开始加载更多", Toast.LENGTH_SHORT).show();
     }
 }

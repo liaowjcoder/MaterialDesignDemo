@@ -48,7 +48,7 @@ public class MyHeaderView extends android.support.v7.widget.AppCompatTextView im
 
     @Override
     public int getRefreshHeight() {
-        return dip2Px(100);
+        return dip2Px(50);
     }
 
     public int dip2Px(int dip) {

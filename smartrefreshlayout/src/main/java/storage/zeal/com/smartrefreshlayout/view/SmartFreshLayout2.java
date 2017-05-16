@@ -146,7 +146,8 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
         mScrollView.setBackgroundColor(Color.RED);
         if (mIsSupportLoadMore) {
             mFooter.getLoadMoreView().layout(0, mScrollView.getMeasuredHeight(),
-                    getMeasuredWidth(), mScrollView.getMeasuredHeight() + mFooter.getLoadMoreView().getMeasuredHeight());
+                    getMeasuredWidth(),
+                    mScrollView.getMeasuredHeight() + mFooter.getLoadMoreView().getMeasuredHeight());
 
             mLoadMoreHeight = mFooter.getLoadHeight();
 
@@ -263,7 +264,12 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
     @Override
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
 
-        Log.e("zeal", "dx:" + dx + "====dy:" + dy);
+
+//        float x = ViewCompat.getX(target);
+//        Log.e("zeal","x:"+x);
+
+
+        //Log.e("zeal", "target:" + target + "\n====dy:" + dy);
 
 //        if (Math.abs(dx) > Math.abs(dy)) {
 //            consumed[1] = dy;
@@ -317,9 +323,6 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
             return;
         } else if (mCurrentState == LOADING) {
 
-            if (getScrollY() == 0) {
-                Toast.makeText(getContext(), "LOADING", Toast.LENGTH_SHORT).show();
-            }
 
             if (dy > 0) {//手指向上海东
                 if (!canScrollUpVertically) {
@@ -536,11 +539,13 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
             }
         }
         if (isDump) {
-//            if (Math.abs(y) > 50) {
-//                y /= 150;
-//            } else {
-            y *= DUMP;
-//            }
+            if (Math.abs(y) > 50) {
+                Log.e("zeal", "before y：" + y);
+                y *= DUMP * DUMP * DUMP;
+                Log.e("zeal", "after y：" + y);
+            } else {
+                y *= DUMP;
+            }
         }
         scrollTo(0, getScrollY() + y);
     }
@@ -571,38 +576,63 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
         this.mOnLoadMoreListener = listener;
     }
 
+    private boolean isRecovery;
+
     public void setRefresh(boolean fresh) {
         if (!fresh) {
             notifyStateChange(REFRESHING_DONE);
-            startScroll(0, -getScrollY());
+            isRecovery = true;
+            startScroll(0, -getScrollY(), 300);
             reset();
+            //只有在 300ms 之后才能重新滑动。
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    isRecovery = false;
+                }
+            }, 300);
+
         } else {
             notifyStateChange(REFRESHING);
             startScroll(0, -mRefreshHeight);
         }
     }
 
+    public void setLoadMoreEnd() {
+        notifyStateChange(REFRESHING_DONE);
+        isRecovery = true;
+        startScroll(0, -getScrollY(), 300);
+        reset();
+        //只有在 300ms 之后才能重新滑动。
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isRecovery = false;
+            }
+        }, 300);
+    }
+
     private int mCurrentPointId = -100;
-//    private MotionEvent mEv;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-//
-//        if (ev.getAction() != MotionEvent.ACTION_POINTER_DOWN && ev.getAction() != MotionEvent.ACTION_POINTER_UP) {
-//            mEv = ev;
-//        }
-        if (mCurrentPointId == -100) {
+        if (isRecovery) {
+            return true;
+        }
+        //解决多指滑动问题
+        final int action = MotionEventCompat.getActionMasked(ev);
+        if (action == MotionEvent.ACTION_DOWN) {
             mCurrentPointId = ev.getPointerId(ev.getActionIndex());
-//            mEv = ev;
         } else {
+
             if (mCurrentPointId != ev.getPointerId(ev.getActionIndex())) {
-                //Toast.makeText(getContext(), "不同手指啦", Toast.LENGTH_SHORT).show();
-//                startScroll(0, -getScrollY(), 500);
-                //ev.setAction(MotionEvent.ACTION_DOWN);
-//                onStartNestedScroll()
-                return false;
+                if (action == MotionEventCompat.ACTION_POINTER_DOWN) {
+                    return true;
+                }
             }
         }
+        //滑动结束后，只有在恢复到原始状态才能去发起第二次滑动
+        //
         return super.dispatchTouchEvent(ev);
     }
 }
