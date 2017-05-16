@@ -292,18 +292,21 @@ public class SmartFreshLayout2 extends ViewGroup implements NestedScrollingParen
         }
 
 
-        //当前是头部或者底部可见时，先询问父控件是否要滑动；
-        int[] preConsume = new int[2];
-        dispatchNestedPreScroll(dx, dy, preConsume, null);
-
-        int preConsumeY = preConsume[1];
-        dy = dy - preConsumeY;
-
-        if (dy == 0) {
-            //事件全部被父亲都消费了
-            consumed[1] = preConsumeY;
-            return;
-        }
+        //只有头部可见时才询问父亲是否要响应当前事件
+//        if (getScrollY() < 0) {
+////            当前是头部或者底部可见时，先询问父控件是否要滑动；
+//            int[] preConsume = new int[2];
+//            dispatchNestedPreScroll(dx, dy, preConsume, null);
+//
+//            int preConsumeY = preConsume[1];
+//            dy = dy - preConsumeY;
+//
+//            if (dy == 0) {
+//                //事件全部被父亲都消费了
+//                consumed[1] = preConsumeY;
+//                return;
+//            }
+//        }
 
         //判断rv是否能往上滑动
         boolean canScrollUpVertically = ViewCompat.canScrollVertically(mScrollView, 1);
